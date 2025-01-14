@@ -58,7 +58,7 @@ const Task = () => {
                     }`}
             >
                 <div className="flex items-center mt-4 gap-2 px-3">
-                    <div className="w-10 h-10 rounded-full bg-[#FEE4CB] flex justify-center items-center">
+                    <div className="w-10 h-10 rounded-full bg-[#CBE5FF] flex justify-center items-center">
                         D
                     </div>
                     <p>July 04, 2024</p>
@@ -79,16 +79,16 @@ const Task = () => {
             </div>
 
             {/* Edit Task Details  */}
-            {isEditTaskOpen ? <div className='absolute w-[26vw] bg-white border-2 border-[#FBC5C7] top-4 left-4 p-4 rounded-3xl z-30'>
+            {isEditTaskOpen ? <div className='absolute md:w-[26vw] w-[83vw]  bg-white border-2 border-[#CBE5FF] top-4 left-4 p-4 rounded-3xl z-30'>
                 <h2>Edit Task Details</h2>
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="title">Title</label>
-                    <input type="text" name='title' id='title' placeholder='Edit Title' className='p-2 rounded-xl mt-2 bg-[#FBC5C7]' />
+                    <input type="text" name='title' id='title' placeholder='Edit Title' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
                 </div>
 
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="assignTo" >Assign To</label>
-                    <select name='assignTo' id='assignTo' className='p-2 rounded-xl mt-2 bg-[#FBC5C7]' >
+                    <select name='assignTo' id='assignTo' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' >
                         <option value='' >Select Member</option>
                         <option value='Devanshi' >Devanshi</option>
                         <option value='Saket' >Saket</option>
@@ -97,11 +97,11 @@ const Task = () => {
 
                 <div className='flex flex-col mt-3'>
                     <label htmlFor='deadline'>Deadline</label>
-                    <input type="date" name='deadline' id='deadline' className='p-2 rounded-xl mt-2 bg-[#FBC5C7]' />
+                    <input type="date" name='deadline' id='deadline' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
 
                     <div className='flex mt-4 gap-3 justify-center'>
-                        <button className='py-3 px-6 bg-[#FBC5C7] rounded-3xl'>Add Task</button>
-                        <button className='py-3 px-6 bg-[#FBC5C7] rounded-3xl' onClick={handleEditTaskToggle}>Cancel</button>
+                        <button className='py-3 px-6 bg-[#CBE5FF] rounded-3xl'>Add Task</button>
+                        <button className='py-3 px-6 bg-[#CBE5FF] rounded-3xl' onClick={handleEditTaskToggle}>Cancel</button>
                     </div>
                 </div>
 

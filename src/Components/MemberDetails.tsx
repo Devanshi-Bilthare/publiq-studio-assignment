@@ -26,6 +26,7 @@ const MemberDetails = () => {
 
     </div>
 
+    {/* Edit Member Form  */}
     {isOpen ?  <div className='absolute top-[20vh] md:left-[30vw] md:w-[30vw] w-[80vw] md:bg-[#CBE5FF] bg-white p-6 rounded-3xl gap-10 border-2 border-[#CBE5FF]'>
         <h2 className='text-center text-xl'>Edit Member Detail</h2>
             <div className='w-full flex flex-col'>

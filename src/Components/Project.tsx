@@ -29,7 +29,7 @@ const Project = () => {
     }
 
     return (
-        <div className='w-[28vw] max-h-[82vh] bg-[#CBE5FF] rounded-3xl p-4 relative'>
+        <div className='md:w-[28vw] w-full max-h-[82vh] bg-[#CBE5FF] rounded-3xl p-4 relative'>
 
             {/* Project Details  */}
             <div className='w-full h-[30vh] bg-white rounded-3xl p-3'>
@@ -86,7 +86,7 @@ const Project = () => {
             </div>
 
             {/* Add Task  */}
-            {isAddTaskOpen ? <div className='absolute w-[26vw] bg-white border-2 border-[#CBE5FF] top-4 left-4 p-4 rounded-3xl z-30'>
+            {isAddTaskOpen ? <div className='absolute md:w-[26vw] w-[83vw] bg-white border-2 border-[#CBE5FF] top-4 left-4 p-4 rounded-3xl z-30'>
                 <h2>Add Task</h2>
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="title">Title</label>
@@ -115,7 +115,7 @@ const Project = () => {
             </div> : ''}
 
             {/* Edit Project Details  */}
-            {isEditProjectOpen ? <div className='absolute w-[26vw] bg-white border-2 border-[#CBE5FF] top-4 left-4 p-4 rounded-3xl z-30'>
+            {isEditProjectOpen ? <div className='absolute md:w-[26vw] w-[83vw] bg-white border-2 border-[#CBE5FF] top-4 left-4 p-4 rounded-3xl z-30'>
                 <h2>Edit Project Details</h2>
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="projName">Project Name</label>
