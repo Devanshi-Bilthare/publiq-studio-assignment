@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Components/Navbar'
 import Projects from './Pages/Projects'
+import Teams from './Pages/Teams'
 
 const App = () => {
   return (

@@ -1,11 +1,18 @@
 import React, { useState } from 'react'
 import { IoIosAddCircle } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
+import { IoIosArrowBack } from "react-icons/io";
+import Teams from '../Pages/Teams';
 const Navbar = () => {
     const [isOpen,setIsOpen] = useState(false)
+    const [isMemberOpen,setIsMemberOpen] = useState(false)
 
     const handleOpenToggle = () => {
         setIsOpen(!isOpen)
+    }
+
+    const handleMemberToggle = () => {
+        setIsMemberOpen(!isMemberOpen)
     }
 
   return (
@@ -22,7 +29,7 @@ const Navbar = () => {
             <div className='ms-[-15px] w-10 h-10 rounded-full bg-[#FFD3E2] flex justify-center items-center'>E</div>
             <div className='ms-[-15px] w-10 h-10 rounded-full bg-[#BAF3D2] flex justify-center items-center'>A</div>
             <div className='ms-[-15px] w-10 h-10 rounded-full bg-[#FBC5C7] flex justify-center items-center'>Z</div>
-            <div className='ms-[-15px] w-10 h-10 text-2xl rounded-full bg-[#CBE5FF] flex justify-center items-center'>+</div>
+            <div className='ms-[-15px] w-10 h-10 text-2xl rounded-full bg-[#CBE5FF] flex justify-center items-center cursor-pointer' onClick={handleMemberToggle}>+</div>
         </div>
 
         {isOpen ? <div className='absolute w-[26vw] bg-white border-2 border-[#CBE5FF] top-4 left-28 p-4 rounded-3xl z-30'>
@@ -43,6 +50,10 @@ const Navbar = () => {
                 </div>
 
             </div> : ''}
+
+            {isMemberOpen ? <Teams/> : ''}
+
+           {isMemberOpen ?  <p className='md:w-14 md:h-14 w-12 h-12 bg-[#CBE5FF] fixed z-40 flex text-3xl gap-2 items-center justify-center cursor-pointer rounded-full text-white' onClick={handleMemberToggle}><IoIosArrowBack /></p> : ''}
     </div>
   )
 }
