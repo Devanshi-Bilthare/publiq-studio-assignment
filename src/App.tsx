@@ -1,5 +1,6 @@
 import Navbar from './Components/Navbar'
 import Projects from './Pages/Projects'
+import './App.css'
 
 const App = () => {
   return (
