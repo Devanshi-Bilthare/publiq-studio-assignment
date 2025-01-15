@@ -1,50 +1,86 @@
-# React + TypeScript + Vite
+# Project Management Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+This is a **Project Management Dashboard** developed using **Vite**, **React**, **Redux Toolkit**, **TypeScript**, and **Tailwind CSS**. The dashboard helps users manage projects, tasks, and team members. It features CRUD operations for projects, tasks, and team members and calculates project progress based on task completion. The dashboard is fully responsive, providing a seamless experience across desktop, tablet, and mobile views.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 1. Projects Section:
+- **Display**: A list of projects with details such as:
+  - Project name
+  - Deadline
+  - Progress status (calculated based on task completion)
+- **CRUD Operations**:
+  - **Add**: Add new projects.
+  - **Edit**: Modify project details (e.g., name, deadline).
+  - **Delete**: Remove projects.
 
-## Expanding the ESLint configuration
+### 2. Tasks Section:
+- **Task List**: Each project displays a list of tasks in a collapsible view.
+- **Task Details**:
+  - Title
+  - Assigned Team Member
+  - Deadline
+  - Status (To Do, In Progress, Completed)
+- **CRUD Operations**:
+  - **Add**: Add new tasks to projects.
+  - **Edit**: Modify task details.
+  - **Delete**: Remove tasks.
+- **Collapsible View**: Tasks can be expanded or collapsed to hide or show detailed information.
+- **Progress Calculation**: Project progress is dynamically calculated based on the number of completed tasks.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### 3. Team Section:
+- **Team Member Management**:
+  - Name
+  - Email
+  - Role
+- **CRUD Operations**:
+  - **Add**: Add new team members.
+  - **Edit**: Edit member details.
+  - **Delete**: Remove team members.
+- **Navigation**: A back button allows users to return to the main dashboard page.
 
-- Configure the top-level `parserOptions` property like this:
+### 4. State Management:
+- **Redux Toolkit**: Efficiently manages the state of projects, tasks, and team members.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 5. Responsive Design:
+- **Tailwind CSS**: Ensures the dashboard adapts seamlessly to desktop, tablet, and mobile views.
+
+### 6. TypeScript:
+- Fully implemented **TypeScript** for type-safe development practices, ensuring code stability and scalability.
+
+## Tech Stack
+- **Frontend**: React, TypeScript, Tailwind CSS, Vite, Redux Toolkit, React-Redux
+- **State Management**: Redux Toolkit
+- **Build Tools**: Vite
+
+## Setup Instructions
+
+### Prerequisites
+Ensure that **Node.js** and **npm** are installed on your machine.
+
+### Installation
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Devanshi-Bilthare/publiq-studio-assignment.git
+   cd publiq-studio-assignment
+   ```
+
+2. Install the dependencies:
+
+   ```bash
+   npm install
+   ```
+
+### Running the Development Server
+To start the development server:
+
+```bash
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+This will start the app in development mode, accessible at [http://localhost:5173/](http://localhost:5173/).
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Live Demo
+You can view the live project at: [Project Management Dashboard](https://publiq-studio-assignment-jth1.vercel.app/)

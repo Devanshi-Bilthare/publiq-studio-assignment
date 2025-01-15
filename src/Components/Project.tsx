@@ -178,7 +178,7 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
                 <div className=' w-full h-3 border-2 border-[#81DDF7] mt-4 rounded-xl flex items-center group'>
                 <div style={{ width: `${project.progress}%` }} className="relative h-3 bg-[#81DDF7] rounded-xl">
                         <div className='absolute right-[-40px] bg-[#99B3FE] p-2 rounded-xl bottom-4 opacity-0 group-hover:opacity-100'>
-                            {project.progress.toFixed(1)}%
+                            {project?.progress?.toFixed(1)}%
                         </div>
 
                     </div>
