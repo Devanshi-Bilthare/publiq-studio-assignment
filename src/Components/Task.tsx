@@ -1,13 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
+import { DeleteTask, EditTask } from "../features/Tasks/TaskSlice";
+import { useSelector } from "react-redux";
 
-const Task = () => {
+interface Task {
+    id: string; 
+    title:string,
+    assignTo:string,
+    deadline:string,
+    status:string,
+    projId:string
+  }
+
+  interface TaskProps {
+    task:Task
+  }
+
+const Task: React.FC<TaskProps> = ({task}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isEditTaskOpen, setIsEditTaskOpen] = useState(false)
+    const allMembers = useSelector((state:RootState) => state?.member?.members)
+    const dispatch:AppDispatch = useDispatch()
+
+
+    const [data,setData] = useState({
+        id:task.id,
+        title: task.title,
+        assignTo: task.assignTo,
+        deadline: task.deadline,
+        status: task.status,
+        projId:task.projId
+    })
 
     const handleMenuToggle = () => {
         setIsMenuOpen(!isMenuOpen)
@@ -22,10 +51,31 @@ const Task = () => {
         setIsMenuOpen(false)
     }
 
+    const changeHandler = (e:any) =>{
+        const {name,value} = e.target
+        setData((prevData) => ({
+            ...prevData,
+            [name] : value
+        }))
+    }
+
+    const handleSubmit = (e:React.FormEvent) => {
+        e.preventDefault()
+        dispatch(EditTask(data))
+        setIsEditTaskOpen(false)
+    }
+
+
+    const deleteHandler = () => {
+        dispatch(DeleteTask(task.id))
+        setIsMenuOpen(false)
+    }
+
+
     return (
         <div className="w-full bg-white pt-3 rounded-2xl mt-3">
             <div className="flex gap-3 px-3 justify-between ">
-                <h3 className="text-md">Create a preview for the last article from our blog.</h3>
+                <h3 className="text-md">{data?.title}</h3>
                 {/* Menu Options  */}
                 <div className="relative">
                     <HiDotsVertical onClick={handleMenuToggle} className="cursor-pointer" />
@@ -39,7 +89,7 @@ const Task = () => {
                                         Edit
                                     </li>
                                 </div>
-                                <div className='flex items-center p-2 gap-2 hover:bg-gray-100 cursor-pointer'>
+                                <div className='flex items-center p-2 gap-2 hover:bg-gray-100 cursor-pointer' onClick={deleteHandler}>
                                     <MdDelete />
                                     <li
                                     >
@@ -58,12 +108,12 @@ const Task = () => {
                     }`}
             >
                 <div className="flex items-center mt-4 gap-2 px-3">
-                    <div className="w-10 h-10 rounded-full bg-[#CBE5FF] flex justify-center items-center">
-                        D
+                    <div className="w-10 h-10 rounded-full bg-[#FBC5C7] flex justify-center items-center">
+                        {data?.assignTo?.slice(0,1).toUpperCase()}
                     </div>
-                    <p>July 04, 2024</p>
+                    <p>{data?.deadline}</p>
                 </div>
-                <p className="mt-3 text-green-600 px-3">In Progress</p>
+                <p className="mt-3 text-green-600 px-3">{data?.status}</p>
             </div>
 
             {/* Collapse Arrow  */}
@@ -79,33 +129,48 @@ const Task = () => {
             </div>
 
             {/* Edit Task Details  */}
-            {isEditTaskOpen ? <div className='absolute md:w-[26vw] w-[83vw]  bg-white border-2 border-[#CBE5FF] top-4 left-4 p-4 rounded-3xl z-30'>
+            {isEditTaskOpen ? <form onSubmit={handleSubmit} className='absolute md:w-[26vw] w-[83vw]  bg-white border-2 border-[#CBE5FF] top-4 left-4 p-4 rounded-3xl z-30'>
                 <h2>Edit Task Details</h2>
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="title">Title</label>
-                    <input type="text" name='title' id='title' placeholder='Edit Title' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
+                    <input type="text" name='title' id='title' value={data.title} onChange={changeHandler} placeholder='Edit Title' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
                 </div>
 
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="assignTo" >Assign To</label>
-                    <select name='assignTo' id='assignTo' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' >
+                    <select name='assignTo' id='assignTo' value={data?.assignTo} onChange={changeHandler} className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' >
                         <option value='' >Select Member</option>
-                        <option value='Devanshi' >Devanshi</option>
-                        <option value='Saket' >Saket</option>
+                        {allMembers?.map(mem => (
+                            <option value={mem.name} >{mem.name}</option>
+                        ))}
                     </select>
                 </div>
+                
 
                 <div className='flex flex-col mt-3'>
                     <label htmlFor='deadline'>Deadline</label>
-                    <input type="date" name='deadline' id='deadline' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
-
-                    <div className='flex mt-4 gap-3 justify-center'>
-                        <button className='py-3 px-6 bg-[#CBE5FF] rounded-3xl'>Add Task</button>
-                        <button className='py-3 px-6 bg-[#CBE5FF] rounded-3xl' onClick={handleEditTaskToggle}>Cancel</button>
+                    <input type="date" name='deadline' value={data.deadline} onChange={changeHandler} id='deadline' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
                     </div>
+
+                    <div className='flex flex-col mt-3'>
+                    <label htmlFor="status" >Status</label>
+                    <select name='status' id='status' value={data?.status} onChange={changeHandler} className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' >
+                        <option value='To Do' >To Do</option>
+                        <option value='IN Progress' >In Progress</option>
+                        <option value='Completed' >Completed</option>
+                        
+                    </select>
                 </div>
 
-            </div> : ''}
+
+                    <div className='flex mt-4 gap-3 justify-center'>
+                        <button type="submit" className='py-3 px-6 bg-[#CBE5FF] rounded-3xl'>Edit Task</button>
+                        <button className='py-3 px-6 bg-[#CBE5FF] rounded-3xl' onClick={handleEditTaskToggle}>Cancel</button>
+                    </div>
+               
+
+                
+            </form> : ''}
         </div>
     );
 };

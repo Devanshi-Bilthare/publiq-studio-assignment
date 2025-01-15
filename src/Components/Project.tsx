@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { HiDotsVertical } from "react-icons/hi";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { IoMdAddCircle } from "react-icons/io";
 import Task from './Task'
-import { AppDispatch } from '../store/store';
+import { AppDispatch, RootState } from '../store/store';
 import { useDispatch } from 'react-redux';
 import { DeleteProject, EditProject } from '../features/Projects/ProjectSlice';
+import { GetMembers } from '../features/Members/MemberSlice';
+import { useSelector } from 'react-redux';
+import { AddTasks, GetTasks } from '../features/Tasks/TaskSlice';
 
 interface Project {
     id:string,
@@ -24,7 +27,14 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isAddTaskOpen, setIsAddTaskOpen] = useState(false)
     const [isEditProjectOpen, setIsEditProjectOpen] = useState(false)
+    const allMembers = useSelector((state:RootState) => state?.member?.members)
+    const allTasks = useSelector((state:RootState) => state?.task?.tasks)
+    const {memberDetail} = useSelector((state:RootState) => state?.member)
+    const {taskDetail} = useSelector((state:RootState) => state?.task)
     const dispatch:AppDispatch = useDispatch()
+
+    const projTasks = allTasks.filter((task) => task.projId === project.id)
+
     const [data,setData] = useState({
             id:project.id,
             projName: project.projName,
@@ -32,6 +42,14 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
             progress:project.progress,
             tasks:project.tasks
     })
+
+    const [taskData,setTaskData] = useState({
+        title:'',
+        deadline:'',
+        assignTo:'',
+        status:'To Do'
+    })
+
 
     const handleMenuToggle = () => {
         setIsMenuOpen(!isMenuOpen)
@@ -46,6 +64,23 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
         setIsEditProjectOpen(!isEditProjectOpen)
         setIsAddTaskOpen(false)
         setIsMenuOpen(false)
+    }
+
+    useEffect(() => {
+        dispatch(GetMembers())
+        dispatch(GetTasks())
+    },[memberDetail,taskDetail])
+
+    useEffect(() => {
+        calculateProgress()
+    },[allTasks])
+
+    const calculateProgress = () => {
+        const completedTasks = projTasks.filter((task) => task.status == "Completed")
+        const progress = (completedTasks.length/projTasks.length)*100
+        console.log(completedTasks.length,projTasks.length)
+            dispatch(EditProject({...data,progress:progress}))
+
     }
 
     const deleteHandler = () => {
@@ -64,6 +99,35 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
         e.preventDefault()
         dispatch(EditProject(data))
         setIsEditProjectOpen(false)
+    }
+
+    const changeTaskHandler = (e:any) => {
+        const { name, value } = e.target;
+        setTaskData((prevData) => ({
+          ...prevData,
+          [name]: value
+        }));
+    }
+
+    const HandleTaskSubmit = (e:React.FormEvent) => {
+        e.preventDefault()
+        const taskWithId = { ...taskData, id: new Date().toISOString(),projId:project.id }
+        dispatch(AddTasks(taskWithId))
+
+        const updatedProject = {
+            ...data,
+            tasks: [...data.tasks, taskWithId.id],
+        };
+    
+        dispatch(EditProject(updatedProject));
+        setTaskData({
+            title: '',
+            deadline: '',
+            assignTo: '',
+            status:'To Do'
+        });
+        setIsAddTaskOpen(false);
+        calculateProgress()
     }
 
     return (
@@ -111,8 +175,11 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
                 <h3 className='text-center text-xl font-semibold my-6 px-3'>{project.projName}</h3>
 
                 <p>Progress</p>
-                <div className='w-full h-3 border-2 border-[#81DDF7] mt-4 rounded-xl flex items-center'>
-                    <div className={`w-[${project?.progress}%] h-3 bg-[#81DDF7] rounded-xl`}>
+                <div className=' w-full h-3 border-2 border-[#81DDF7] mt-4 rounded-xl flex items-center group'>
+                <div style={{ width: `${project.progress}%` }} className="relative h-3 bg-[#81DDF7] rounded-xl">
+                        <div className='absolute right-[-40px] bg-[#CBE5FF] p-2 rounded-xl bottom-4 opacity-0 group-hover:opacity-100'>
+                            {project.progress || 0}%
+                        </div>
 
                     </div>
                 </div>
@@ -120,39 +187,50 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
 
             {/* Task Lists  */}
             <div className='w-full mt-4 max-h-[45vh] overflow-y-auto'>
-                <Task />
-                <Task />
-                <Task />
+               {projTasks?.map((task) => (
+                <Task task={task} key={task.id}/>
+               ))}
             </div>
 
             {/* Add Task  */}
-            {isAddTaskOpen ? <div className='absolute md:w-[26vw] w-[83vw] bg-white border-2 border-[#CBE5FF] top-4 left-4 p-4 rounded-3xl z-30'>
+            {isAddTaskOpen ? <form onSubmit={HandleTaskSubmit} className='absolute md:w-[26vw] w-[83vw] bg-white border-2 border-[#CBE5FF] top-4 left-4 p-4 rounded-3xl z-30'>
                 <h2>Add Task</h2>
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="title">Title</label>
-                    <input type="text" name='title' id='title' placeholder='Add Title' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
+                    <input type="text" name='title' id='title' value={taskData.title} onChange={changeTaskHandler} placeholder='Add Title' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
                 </div>
 
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="assignTo" >Assign To</label>
-                    <select name='assignTo' id='assignTo' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' >
+                    <select name='assignTo' id='assignTo' value={taskData.assignTo} onChange={changeTaskHandler} className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' >
                         <option value='' >Select Member</option>
-                        <option value='Devanshi' >Devanshi</option>
-                        <option value='Saket' >Saket</option>
+                        {allMembers.map(mem => (
+                            <option value={mem.name} >{mem.name}</option>
+                        ))}
                     </select>
                 </div>
 
                 <div className='flex flex-col mt-3'>
                     <label htmlFor='deadline'>Deadline</label>
-                    <input type="date" name='deadline' id='deadline' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
+                    <input type="date" name='deadline' value={taskData.deadline} onChange={changeTaskHandler} id='deadline' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
+                </div>
+                    <div className='flex flex-col mt-3'>
+                    <label htmlFor="status" >Status</label>
+                    <select name='status' id='status' value={taskData?.status} onChange={changeHandler} className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' >
+                        <option value='To Do' >To Do</option>
+                        <option value='IN Progress' >In Progress</option>
+                        <option value='Completed' >Completed</option>
+                        
+                    </select>
+                </div>
 
                     <div className='flex mt-4 gap-3 justify-center'>
                         <button className='py-3 px-6 bg-[#CBE5FF] rounded-3xl'>Add Task</button>
                         <button className='py-3 px-6 bg-[#CBE5FF] rounded-3xl' onClick={handleAddTaskToggle}>Cancel</button>
                     </div>
-                </div>
+                
 
-            </div> : ''}
+            </form> : ''}
 
             {/* Edit Project Details  */}
             {isEditProjectOpen ? <form onSubmit={handleSubmit} className='absolute md:w-[26vw] w-[83vw] bg-white border-2 border-[#CBE5FF] top-4 left-4 p-4 rounded-3xl z-30'>
