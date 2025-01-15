@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { IoIosAddCircle } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import { IoIosArrowBack } from "react-icons/io";

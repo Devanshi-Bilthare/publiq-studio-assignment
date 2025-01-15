@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useState } from 'react'
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { AppDispatch } from '../store/store';

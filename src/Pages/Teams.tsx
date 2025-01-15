@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import  { useState } from 'react'
 import MemberDetails from '../Components/MemberDetails'
 import { useDispatch } from 'react-redux'
-import { AddMembers, GetMembers } from '../features/Members/MemberSlice'
+import { AddMembers} from '../features/Members/MemberSlice'
 import { AppDispatch, RootState } from '../store/store'
 import { useSelector } from 'react-redux'
 

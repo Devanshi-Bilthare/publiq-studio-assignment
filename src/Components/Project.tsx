@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HiDotsVertical } from "react-icons/hi";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";

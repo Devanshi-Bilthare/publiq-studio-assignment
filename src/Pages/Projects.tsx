@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Project from '../Components/Project'
-import Task from '../Components/Task'
-import { HiDotsVertical } from "react-icons/hi";
 import { AppDispatch, RootState } from '../store/store';
 import { useDispatch } from 'react-redux';
 import { GetProjects } from '../features/Projects/ProjectSlice';
