@@ -3,9 +3,19 @@ import { IoIosAddCircle } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import { IoIosArrowBack } from "react-icons/io";
 import Teams from '../Pages/Teams';
+import { AppDispatch } from '../store/store';
+import { useDispatch } from 'react-redux';
+import { AddProjects } from '../features/Projects/ProjectSlice';
 const Navbar = () => {
     const [isOpen,setIsOpen] = useState(false)
     const [isMemberOpen,setIsMemberOpen] = useState(false)
+    const dispatch:AppDispatch = useDispatch()
+    const [data,setData] = useState({
+        projName: '',
+        deadline: '',
+        progress:0,
+        tasks:[""]
+    })
 
     const handleOpenToggle = () => {
         setIsOpen(!isOpen)
@@ -13,6 +23,28 @@ const Navbar = () => {
 
     const handleMemberToggle = () => {
         setIsMemberOpen(!isMemberOpen)
+    }
+
+    const changeHandler = (e:any) => {
+        const { name, value } = e.target;
+        setData((prevData) => ({
+          ...prevData,
+          [name]: value
+        }));
+    }
+
+    const submitHandler = (e:React.FormEvent) => {
+        e.preventDefault()
+        const dataWithId = { ...data, id: new Date().toISOString() }
+        dispatch(AddProjects(dataWithId))
+        setData({
+            projName: '',
+            deadline: '',
+            progress:0,
+            tasks:[""]
+        })
+
+        setIsOpen(false)
     }
 
   return (
@@ -32,24 +64,24 @@ const Navbar = () => {
             <div className='ms-[-15px] w-10 h-10 text-2xl rounded-full bg-[#CBE5FF] flex justify-center items-center cursor-pointer' onClick={handleMemberToggle}>+</div>
         </div>
 
-        {isOpen ? <div className='absolute w-[26vw] bg-white border-2 border-[#CBE5FF] top-4 left-28 p-4 rounded-3xl z-30'>
+        {isOpen ? <form onSubmit={submitHandler} className='absolute w-[26vw] bg-white border-2 border-[#CBE5FF] top-4 left-28 p-4 rounded-3xl z-30'>
                 <h2>Add Project</h2>
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="projName">Project Name</label>
-                    <input type="text" name='projName' id='projName' placeholder='Project Name' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
+                    <input type="text" name='projName' value={data.projName} onChange={changeHandler} id='projName' placeholder='Project Name' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
                 </div>
 
                 <div className='flex flex-col mt-3'>
                     <label htmlFor='deadline'>Deadline</label>
-                    <input type="date" name='deadline' id='deadline' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
+                    <input type="date" name='deadline' value={data.deadline} onChange={changeHandler} id='deadline' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
 
                     <div className='flex mt-4 gap-3 justify-center'>
-                        <button className='py-3 px-6 bg-[#CBE5FF] rounded-3xl'>Add Project</button>
+                        <button type='submit' className='py-3 px-6 bg-[#CBE5FF] rounded-3xl'>Add Project</button>
                         <button className='py-3 px-6 bg-[#CBE5FF] rounded-3xl' onClick={handleOpenToggle}>Cancel</button>
                     </div>
                 </div>
 
-            </div> : ''}
+            </form> : ''}
 
             {isMemberOpen ? <Teams/> : ''}
 
