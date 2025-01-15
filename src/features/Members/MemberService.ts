@@ -8,31 +8,24 @@ interface Member {
     role: string;
   }
   
-  interface MemberResponse {
-    id: string;
-    name: string;
-    email: string;
-    role: string;
-  }
 
 
-const AddMembers = async (data:Member): Promise<MemberResponse> => {
+const AddMembers = async (data:Member): Promise<Member> => {
     const res = await axios.post(`${base_url}/members`,data)
     return res.data 
 }
 
-const GetMembers = async (): Promise<MemberResponse[]> => {
+const GetMembers = async (): Promise<Member[]> => {
     const res = await axios.get(`${base_url}/members`)
     return res.data
 }
 
-const EditMember = async (data:Member): Promise<MemberResponse> => {
+const EditMember = async (data:Member): Promise<Member> => {
     const res = await axios.put(`${base_url}/members/${data.id}`,data)
     return res.data
 }
 
-
-const DeleteMember = async (id:string): Promise<MemberResponse> => {
+const DeleteMember = async (id:string): Promise<Member> => {
     const res = await axios.delete(`${base_url}/members/${id}`)
     return res.data
 }

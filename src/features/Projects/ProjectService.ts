@@ -5,7 +5,7 @@ interface Project {
     id:string,
     projName: string;
     deadline: string;
-    progress: Number;
+    progress: number;
     tasks:string[]
   }
 

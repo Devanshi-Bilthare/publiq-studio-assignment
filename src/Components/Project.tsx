@@ -15,7 +15,7 @@ interface Project {
     id:string,
     projName: string;
     deadline: string;
-    progress: Number;
+    progress: number;
     tasks:string[]
   }
   
@@ -124,14 +124,14 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
             title: '',
             deadline: '',
             assignTo: '',
-            status:'To Do'
+            status:'TO DO'
         });
         setIsAddTaskOpen(false);
         calculateProgress()
     }
 
     return (
-        <div className='md:w-[28vw] w-full max-h-[82vh] bg-[#CBE5FF] rounded-3xl p-4 relative'>
+        <div className='md:w-[28vw] w-full max-h-[82vh] bg-[#99B3FE] rounded-3xl p-4 relative'>
 
             {/* Project Details  */}
             <div className='w-full h-[30vh] bg-white rounded-3xl p-3'>
@@ -177,8 +177,8 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
                 <p>Progress</p>
                 <div className=' w-full h-3 border-2 border-[#81DDF7] mt-4 rounded-xl flex items-center group'>
                 <div style={{ width: `${project.progress}%` }} className="relative h-3 bg-[#81DDF7] rounded-xl">
-                        <div className='absolute right-[-40px] bg-[#CBE5FF] p-2 rounded-xl bottom-4 opacity-0 group-hover:opacity-100'>
-                            {project.progress || 0}%
+                        <div className='absolute right-[-40px] bg-[#99B3FE] p-2 rounded-xl bottom-4 opacity-0 group-hover:opacity-100'>
+                            {project.progress}%
                         </div>
 
                     </div>
@@ -193,16 +193,16 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
             </div>
 
             {/* Add Task  */}
-            {isAddTaskOpen ? <form onSubmit={HandleTaskSubmit} className='absolute md:w-[26vw] w-[83vw] bg-white border-2 border-[#CBE5FF] top-4 left-4 p-4 rounded-3xl z-30'>
+            {isAddTaskOpen ? <form onSubmit={HandleTaskSubmit} className='absolute md:w-[26vw] w-[83vw] bg-white border-2 border-[#99B3FE] top-4 left-4 p-4 rounded-3xl z-30'>
                 <h2>Add Task</h2>
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="title">Title</label>
-                    <input type="text" name='title' id='title' value={taskData.title} onChange={changeTaskHandler} placeholder='Add Title' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
+                    <input type="text" name='title' id='title' value={taskData.title} onChange={changeTaskHandler} placeholder='Add Title' className='p-2 rounded-xl mt-2 bg-[#99B3FE]' />
                 </div>
 
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="assignTo" >Assign To</label>
-                    <select name='assignTo' id='assignTo' value={taskData.assignTo} onChange={changeTaskHandler} className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' >
+                    <select name='assignTo' id='assignTo' value={taskData.assignTo} onChange={changeTaskHandler} className='p-2 rounded-xl mt-2 bg-[#99B3FE]' >
                         <option value='' >Select Member</option>
                         {allMembers.map(mem => (
                             <option value={mem.name} >{mem.name}</option>
@@ -212,11 +212,11 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
 
                 <div className='flex flex-col mt-3'>
                     <label htmlFor='deadline'>Deadline</label>
-                    <input type="date" name='deadline' value={taskData.deadline} onChange={changeTaskHandler} id='deadline' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
+                    <input type="date" name='deadline' value={taskData.deadline} onChange={changeTaskHandler} id='deadline' className='p-2 rounded-xl mt-2 bg-[#99B3FE]' />
                 </div>
                     <div className='flex flex-col mt-3'>
                     <label htmlFor="status" >Status</label>
-                    <select name='status' id='status' value={taskData?.status} onChange={changeHandler} className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' >
+                    <select name='status' id='status' value={taskData?.status} onChange={changeTaskHandler} className='p-2 rounded-xl mt-2 bg-[#99B3FE]' >
                         <option value='To Do' >To Do</option>
                         <option value='IN Progress' >In Progress</option>
                         <option value='Completed' >Completed</option>
@@ -225,28 +225,28 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
                 </div>
 
                     <div className='flex mt-4 gap-3 justify-center'>
-                        <button className='py-3 px-6 bg-[#CBE5FF] rounded-3xl'>Add Task</button>
-                        <button className='py-3 px-6 bg-[#CBE5FF] rounded-3xl' onClick={handleAddTaskToggle}>Cancel</button>
+                        <button className='py-3 px-6 bg-[#99B3FE] rounded-3xl'>Add Task</button>
+                        <button className='py-3 px-6 bg-[#99B3FE] rounded-3xl' onClick={handleAddTaskToggle}>Cancel</button>
                     </div>
                 
 
             </form> : ''}
 
             {/* Edit Project Details  */}
-            {isEditProjectOpen ? <form onSubmit={handleSubmit} className='absolute md:w-[26vw] w-[83vw] bg-white border-2 border-[#CBE5FF] top-4 left-4 p-4 rounded-3xl z-30'>
+            {isEditProjectOpen ? <form onSubmit={handleSubmit} className='absolute md:w-[26vw] w-[83vw] bg-white border-2 border-[#99B3FE] top-4 left-4 p-4 rounded-3xl z-30'>
                 <h2>Edit Project Details</h2>
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="projName">Project Name</label>
-                    <input type="text" name='projName' id='projName' value={data.projName} onChange={changeHandler} placeholder='Project Name' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
+                    <input type="text" name='projName' id='projName' value={data.projName} onChange={changeHandler} placeholder='Project Name' className='p-2 rounded-xl mt-2 bg-[#99B3FE]' />
                 </div>
 
                 <div className='flex flex-col mt-3'>
                     <label htmlFor='deadline'>Deadline</label>
-                    <input type="date" name='deadline' id='deadline' value={data.deadline} onChange={changeHandler} className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
+                    <input type="date" name='deadline' id='deadline' value={data.deadline} onChange={changeHandler} className='p-2 rounded-xl mt-2 bg-[#99B3FE]' />
 
                     <div className='flex mt-4 gap-3 justify-center'>
-                        <button type='submit' className='py-3 px-6 bg-[#CBE5FF] rounded-3xl'>Edit Project</button>
-                        <button className='py-3 px-6 bg-[#CBE5FF] rounded-3xl' onClick={handleEditProjectToggle}>Cancel</button>
+                        <button type='submit' className='py-3 px-6 bg-[#99B3FE] rounded-3xl'>Edit Project</button>
+                        <button className='py-3 px-6 bg-[#99B3FE] rounded-3xl' onClick={handleEditProjectToggle}>Cancel</button>
                     </div>
                 </div>
 

@@ -107,10 +107,12 @@ const Task: React.FC<TaskProps> = ({task}) => {
                 className={`relative w-full bg-white rounded-b-2xl overflow-hidden transition-max-height duration-300 z-10 ${isOpen ? "max-h-56" : "max-h-0"
                     }`}
             >
-                <div className="flex items-center mt-4 gap-2 px-3">
-                    <div className="w-10 h-10 rounded-full bg-[#FBC5C7] flex justify-center items-center">
+                <div className="relative flex items-center mt-4 gap-2 px-3">
+                    <div className="w-10 h-10 rounded-full border-2 border-[#FBC5C7] bg-[#FFD3E2] flex justify-center items-center group cursor-pointer">
                         {data?.assignTo?.slice(0,1).toUpperCase()}
+                        <div className="absolute left-14 bg-[#FFD3E2] p-2 rounded-lg opacity-0 group-hover:opacity-100">{data.assignTo}</div>
                     </div>
+
                     <p>{data?.deadline}</p>
                 </div>
                 <p className="mt-3 text-green-600 px-3">{data?.status}</p>
@@ -128,17 +130,17 @@ const Task: React.FC<TaskProps> = ({task}) => {
                 />
             </div>
 
-            {/* Edit Task Details  */}
-            {isEditTaskOpen ? <form onSubmit={handleSubmit} className='absolute md:w-[26vw] w-[83vw]  bg-white border-2 border-[#CBE5FF] top-4 left-4 p-4 rounded-3xl z-30'>
+            {/* Edit Task Details Form  */}
+            {isEditTaskOpen ? <form onSubmit={handleSubmit} className='absolute md:w-[26vw] w-[83vw]  bg-white border-2 border-[#99B3FE] top-4 left-4 p-4 rounded-3xl z-30'>
                 <h2>Edit Task Details</h2>
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="title">Title</label>
-                    <input type="text" name='title' id='title' value={data.title} onChange={changeHandler} placeholder='Edit Title' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
+                    <input type="text" name='title' id='title' value={data.title} onChange={changeHandler} placeholder='Edit Title' className='p-2 rounded-xl mt-2 bg-[#99B3FE]' />
                 </div>
 
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="assignTo" >Assign To</label>
-                    <select name='assignTo' id='assignTo' value={data?.assignTo} onChange={changeHandler} className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' >
+                    <select name='assignTo' id='assignTo' value={data?.assignTo} onChange={changeHandler} className='p-2 rounded-xl mt-2 bg-[#99B3FE]' >
                         <option value='' >Select Member</option>
                         {allMembers?.map(mem => (
                             <option value={mem.name} >{mem.name}</option>
@@ -149,12 +151,12 @@ const Task: React.FC<TaskProps> = ({task}) => {
 
                 <div className='flex flex-col mt-3'>
                     <label htmlFor='deadline'>Deadline</label>
-                    <input type="date" name='deadline' value={data.deadline} onChange={changeHandler} id='deadline' className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' />
+                    <input type="date" name='deadline' value={data.deadline} onChange={changeHandler} id='deadline' className='p-2 rounded-xl mt-2 bg-[#99B3FE]' />
                     </div>
 
                     <div className='flex flex-col mt-3'>
                     <label htmlFor="status" >Status</label>
-                    <select name='status' id='status' value={data?.status} onChange={changeHandler} className='p-2 rounded-xl mt-2 bg-[#CBE5FF]' >
+                    <select name='status' id='status' value={data?.status} onChange={changeHandler} className='p-2 rounded-xl mt-2 bg-[#99B3FE]' >
                         <option value='To Do' >To Do</option>
                         <option value='IN Progress' >In Progress</option>
                         <option value='Completed' >Completed</option>
@@ -164,8 +166,8 @@ const Task: React.FC<TaskProps> = ({task}) => {
 
 
                     <div className='flex mt-4 gap-3 justify-center'>
-                        <button type="submit" className='py-3 px-6 bg-[#CBE5FF] rounded-3xl'>Edit Task</button>
-                        <button className='py-3 px-6 bg-[#CBE5FF] rounded-3xl' onClick={handleEditTaskToggle}>Cancel</button>
+                        <button type="submit" className='py-3 px-6 bg-[#99B3FE] rounded-3xl'>Edit Task</button>
+                        <button className='py-3 px-6 bg-[#99B3FE] rounded-3xl' onClick={handleEditTaskToggle}>Cancel</button>
                     </div>
                
 
