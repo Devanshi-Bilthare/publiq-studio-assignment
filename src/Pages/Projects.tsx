@@ -15,7 +15,7 @@ const Projects = () => {
     dispatch(GetProjects())
   },[projectDetail])
   return (
-    <div className="w-full min-h-[90vh] mt-10 flex flex-wrap gap-10 justify-start items-start">
+    <div className="w-full min-h-[80vh] mt-10 flex flex-wrap gap-10 justify-start items-start">
         {
           allProjects?.map((proj) => (
             <Project project={proj} key={proj.id}/>

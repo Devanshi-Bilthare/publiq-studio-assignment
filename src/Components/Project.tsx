@@ -131,10 +131,10 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
     }
 
     return (
-        <div className='md:w-[28vw] w-full max-h-[82vh] bg-[#99B3FE] rounded-3xl p-4 relative'>
+        <div className='md:w-[40vw] lg:w-[28vw] w-full max-h-[82vh] bg-[#99B3FE] rounded-3xl p-4 relative'>
 
             {/* Project Details  */}
-            <div className='w-full h-[30vh] bg-white rounded-3xl p-3'>
+            <div className='w-full bg-white rounded-3xl p-3'>
                 <div className='flex w-full justify-between'>
                     <p className='text-gray-500'>{project.deadline}</p>
                     {/* Menu Options  */}
@@ -193,11 +193,11 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
             </div>
 
             {/* Add Task  */}
-            {isAddTaskOpen ? <form onSubmit={HandleTaskSubmit} className='absolute md:w-[26vw] w-[83vw] bg-white border-2 border-[#99B3FE] top-4 left-4 p-4 rounded-3xl z-30'>
+            {isAddTaskOpen ? <form onSubmit={HandleTaskSubmit} className='absolute md:w-[40vw] lg:w-[26vw] w-[83vw] bg-white border-2 border-[#99B3FE] top-4 left-4 p-4 rounded-3xl z-30'>
                 <h2>Add Task</h2>
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="title">Title</label>
-                    <input type="text" name='title' id='title' value={taskData.title} onChange={changeTaskHandler} placeholder='Add Title' className='p-2 rounded-xl mt-2 bg-[#99B3FE]' />
+                    <input type="text" name='title' id='title' value={taskData.title} onChange={changeTaskHandler} placeholder='Add Title' required className='p-2 rounded-xl mt-2 bg-[#99B3FE]' />
                 </div>
 
                 <div className='flex flex-col mt-3'>
@@ -233,11 +233,11 @@ const Project: React.FC<ProjectDetailsProps> = ({project}) => {
             </form> : ''}
 
             {/* Edit Project Details  */}
-            {isEditProjectOpen ? <form onSubmit={handleSubmit} className='absolute md:w-[26vw] w-[83vw] bg-white border-2 border-[#99B3FE] top-4 left-4 p-4 rounded-3xl z-30'>
+            {isEditProjectOpen ? <form onSubmit={handleSubmit} className='absolute md:w-[40vw] lg:w-[26vw] w-[83vw] bg-white border-2 border-[#99B3FE] top-4 left-4 p-4 rounded-3xl z-30'>
                 <h2>Edit Project Details</h2>
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="projName">Project Name</label>
-                    <input type="text" name='projName' id='projName' value={data.projName} onChange={changeHandler} placeholder='Project Name' className='p-2 rounded-xl mt-2 bg-[#99B3FE]' />
+                    <input type="text" name='projName' id='projName' value={data.projName} onChange={changeHandler} placeholder='Project Name' required className='p-2 rounded-xl mt-2 bg-[#99B3FE]' />
                 </div>
 
                 <div className='flex flex-col mt-3'>

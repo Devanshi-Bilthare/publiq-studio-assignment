@@ -69,11 +69,11 @@ const MemberDetails : React.FC<MemberDetailsProps> = ({member}) => {
     </div>
 
     {/* Edit Member Form  */}
-    {isOpen ?  <form onSubmit={editHandler} className='absolute top-[20vh] md:left-[30vw] md:w-[30vw] w-[80vw] md:bg-[#99B3FE] bg-white p-6 rounded-3xl gap-10 border-2 border-[#99B3FE]'>
+    {isOpen ?  <form onSubmit={editHandler} className='absolute top-[20vh] md:left-[30vw] md:w-[40vw] lg:w-[30vw] w-[80vw] md:bg-[#99B3FE] bg-white p-6 rounded-3xl gap-10 border-2 border-[#99B3FE]'>
         <h2 className='text-center text-xl'>Edit Member Detail</h2>
             <div className='w-full flex flex-col'>
                 <label htmlFor="name">Name</label>
-                <input type="text" name='name' value={data.name} onChange={changeHandler} placeholder='Enter Team Member Name' className='p-2 rounded-xl md:bg-white bg-[#99B3FE]' />
+                <input type="text" name='name' value={data.name} onChange={changeHandler} placeholder='Enter Team Member Name' required className='p-2 rounded-xl md:bg-white bg-[#99B3FE]' />
             </div>
             <div className='w-full flex flex-col '>
                 <label htmlFor="email">Email</label>

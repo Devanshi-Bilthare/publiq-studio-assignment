@@ -83,11 +83,11 @@ const Navbar = () => {
         </div>
 
         {/* Add Project Form  */}
-        {isOpen ? <form onSubmit={submitHandler} className='absolute w-[26vw] bg-white border-2 border-[#99B3FE] top-4 left-28 p-4 rounded-3xl z-30'>
+        {isOpen ? <form onSubmit={submitHandler} className='absolute md:w-[40vw] lg:w-[26vw] w-[83vw] bg-white border-2 border-[#99B3FE] top-4 md:left-28 left-10 p-4 rounded-3xl z-30'>
                 <h2>Add Project</h2>
                 <div className='flex flex-col mt-3'>
                     <label htmlFor="projName">Project Name</label>
-                    <input type="text" name='projName' value={data.projName} onChange={changeHandler} id='projName' placeholder='Project Name' className='p-2 rounded-xl mt-2 bg-[#99B3FE]' />
+                    <input type="text" name='projName' value={data.projName} onChange={changeHandler} id='projName' placeholder='Project Name' required className='p-2 rounded-xl mt-2 bg-[#99B3FE]' />
                 </div>
 
                 <div className='flex flex-col mt-3'>
